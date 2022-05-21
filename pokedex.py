@@ -1,3 +1,4 @@
+#Importing packages
 import urllib.request, json, time, requests
 from cgitb import html
 from re import S
@@ -5,9 +6,11 @@ from traceback import print_tb
 from urllib import request
 from bs4 import BeautifulSoup
 
+#Loading in JSON
 with urllib.request.urlopen("https://raw.githubusercontent.com/fanzeyi/pokemon.json/master/pokedex.json") as url:
     data = json.loads(url.read().decode())
 
+#Search Pokemon within Dictionary
 def searchPokemon():
     print("Welcome to the Online Pokédex!")
     time.sleep(1)
@@ -46,6 +49,7 @@ def searchPokemon():
         if found == False:
             print("Does not exist, please try again.")
             time.sleep(0.5)
+    #Providing description of Pokemon upon request
     desc = False
     vers = False
     time.sleep(0.5)
@@ -57,11 +61,13 @@ def searchPokemon():
             desc = True
             break;
         else:
+            #Web-Scraping
             n_url = "https://www.pokemon.com/us/pokedex/{}".format(n)
             r = requests.get(n_url)
             doc = BeautifulSoup(r.text, "html.parser")
             result = doc.get_text()
             while vers == False:
+                #Selecting Version of Description for Pokemon
                 b = input("Which version do you want? Please type x for version X and y for version Y. \n")
                 time.sleep(0.5)
                 if b == "x":
@@ -80,6 +86,6 @@ def searchPokemon():
     print("Finished usage, shutting down...")
 
 
-        
+#Initiating Script 
 if __name__ == "__main__":
     searchPokemon()
